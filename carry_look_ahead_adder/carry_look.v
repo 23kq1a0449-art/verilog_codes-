@@ -1,0 +1,20 @@
+module carry_look(a,b,cin,cout,s);
+input [3:0]a;
+input [3:0]b;
+input cin;
+output [3:0]s;
+wire c0,c1,c2,c3;
+wire [3:0]g,p;
+output cout;
+assign p=a^b;
+assign g=a&b;
+assign c0=g[0]|(p[0]&cin);
+assign c1=g[1]|(p[1]&g[0])|(p[1]&p[0]&cin);
+assign c2=g[2]|(p[2]&g[1])|(p[2]&p[1]&g[0])|(p[2]&p[1]&p[0]&cin);
+assign c3=g[3]|(p[3]&g[2])|(p[3]&p[2]&g[1])|(p[3]&p[2]&p[1]&g[0])|(p[3]&p[2]&p[1]&p[0]&cin);
+assign s[0]=p[0]^cin;
+assign s[1]=p[1]^c0;
+assign s[2]=p[2]^c1;
+assign s[3]=p[3]^c2;
+assign cout=c3;
+endmodule
